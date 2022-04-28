@@ -1,0 +1,10 @@
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://github.com/naemono/argocd-testing
+    targetRevision: HEAD
+
+version:
+  eckOperator: "2.2.0"
+  sealedSecrets: "v2.1.8"

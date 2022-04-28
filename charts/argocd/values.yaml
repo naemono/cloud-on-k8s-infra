@@ -1,0 +1,15 @@
+# The following is from https://github.com/argoproj/argo-helm/tree/master/charts/argo-cd#ha-mode-without-autoscaling
+redis-ha:
+  enabled: true
+
+controller:
+  enableStatefulSet: true
+
+server:
+  replicas: 2
+  env:
+    - name: ARGOCD_API_SERVER_REPLICAS
+      value: '2'
+
+repoServer:
+  replicas: 2

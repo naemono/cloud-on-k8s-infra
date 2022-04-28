@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: e2e-monitor
+  namespace: argocd
+spec:
+  project: e2e-monitor
+  source:
+    repoURL: https://github.com/naemono/cloud-on-k8s-infra
+    targetRevision: argocd
+    path: applications/e2e-monitor
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
