@@ -15,3 +15,4 @@ This helm chart is intended to be the initial helm chart installed within a clus
 * Let's Encrypt Issuer for CertManager
 * Elasticsearch snapshot repo, and policy.
 * Nginx Ingress
+* gcs-credentials secret (will be a bitnami sealed secret, in version control)
