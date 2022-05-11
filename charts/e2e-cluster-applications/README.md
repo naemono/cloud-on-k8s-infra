@@ -8,6 +8,7 @@ This helm chart is intended to be the initial helm chart installed within a clus
 
 * ECK Operator
 * ECK objects  (ES/Kibana/APMServer CRDs) in default NS
+* Bitnami sealed secrets operator
 
 ### TODO Applications
 
