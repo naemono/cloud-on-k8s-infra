@@ -7,11 +7,11 @@ This helm chart is intended to be the initial helm chart installed within a clus
 ### Currently Installed/Managed Applications
 
 * ECK Operator
+* ECK objects  (ES/Kibana/APMServer CRDs) in default NS
 
 ### TODO Applications
 
 * CertManager
 * Let's Encrypt Issuer for CertManager
-* ECK objects  (ES/Kibana/APMServer CRDs) in default NS
-* Elasticsearch snapshot repo, and policy?
-* Ingress of some sort?
+* Elasticsearch snapshot repo, and policy.
+* Nginx Ingress
