@@ -1,0 +1,13 @@
+{{ if .Values.spec.source.sshKey }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cloud-on-k8s-infra
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  type: git
+  url: git@{{ .Values.spec.source.repo.provider }}:{{ .Values.spec.source.repo.organization }}/{{ .Values.spec.source.repo.repository }}
+  sshPrivateKey: {{ .Values.spec.source.sshKey }}
+{{ end }}

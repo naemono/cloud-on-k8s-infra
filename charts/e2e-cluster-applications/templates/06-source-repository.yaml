@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: source-repository
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  type: git
+  url: https://{{ .Values.spec.source.repo.provider }}/{{ .Values.spec.source.repo.organization }}/{{ .Values.spec.source.repo.repository }}
