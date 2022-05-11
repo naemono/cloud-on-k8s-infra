@@ -24,20 +24,15 @@ spec:
         containers:
         - name: elasticsearch
           env:
-          # reset to value: -Xms16g -Xmx16g
           - name: ES_JAVA_OPTS
-            value: -Xms3g -Xmx3g
+            value: -Xms16g -Xmx16g
           resources:
             requests:
-              # 32Gi
-              memory: 2Gi
-              # 18
-              cpu: 1
+              memory: 32Gi
+              cpu: 18
             limits:
-              # 32Gi
-              memory: 4Gi
-              # 18
-              cpu: 1
+              memory: 32Gi
+              cpu: 18
     volumeClaimTemplates:
     - metadata:
         name: elasticsearch-data
