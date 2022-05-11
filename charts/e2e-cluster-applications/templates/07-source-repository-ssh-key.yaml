@@ -9,5 +9,6 @@ metadata:
 stringData:
   type: git
   url: git@{{ .Values.spec.source.repo.provider }}:{{ .Values.spec.source.repo.organization }}/{{ .Values.spec.source.repo.repository }}
-  sshPrivateKey: {{ .Values.spec.source.sshKey }}
+  sshPrivateKey: |-
+{{ .Values.spec.source.sshKey | indent 4 }}
 {{ end }}
