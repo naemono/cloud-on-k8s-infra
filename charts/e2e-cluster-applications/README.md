@@ -9,11 +9,11 @@ This helm chart is intended to be the initial helm chart installed within a clus
 * ECK Operator
 * ECK objects  (ES/Kibana/APMServer CRDs) in default NS
 * Bitnami sealed secrets operator
+* Nginx Ingress
+* gcs-credentials secret (is a bitnami sealed secret, in version control)
 
 ### TODO Applications
 
 * CertManager
 * Let's Encrypt Issuer for CertManager
 * Elasticsearch snapshot repo, and policy.
-* Nginx Ingress
-* gcs-credentials secret (will be a bitnami sealed secret, in version control)

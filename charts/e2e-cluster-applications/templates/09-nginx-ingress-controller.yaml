@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx-ingress-controller
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: ingress-nginx
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: 'nginx-ingress'
+    repoURL: 'https://helm.nginx.com/stable'
+    targetRevision: {{ .Values.version.nginxIngress }}
+    chart: nginx-ingress
+  project: e2e-monitor
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true

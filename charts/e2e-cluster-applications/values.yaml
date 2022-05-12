@@ -12,3 +12,4 @@ spec:
 version:
   eckOperator: "2.2.0"
   sealedSecrets: "v2.1.8"
+  nginxIngress: "2.0.3"
