@@ -11,9 +11,9 @@ This helm chart is intended to be the initial helm chart installed within a clus
 * Bitnami sealed secrets operator
 * Nginx Ingress
 * gcs-credentials secret (is a bitnami sealed secret, in version control)
+* CertManager
+* Let's Encrypt Issuer for CertManager
 
 ### TODO Applications
 
-* CertManager
-* Let's Encrypt Issuer for CertManager
 * Elasticsearch snapshot repo, and policy.
