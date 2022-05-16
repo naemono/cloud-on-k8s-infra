@@ -16,7 +16,7 @@ spec:
     chart: cert-manager
     helm:
       values: |
-        installCRDs=true
+        installCRDs: true
   project: e2e-monitor
   syncPolicy:
     automated:
