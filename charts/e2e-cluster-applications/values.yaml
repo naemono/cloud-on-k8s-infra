@@ -12,5 +12,5 @@ spec:
 version:
   eckOperator: "2.2.0"
   sealedSecrets: "v2.1.8"
-  nginxIngress: "2.0.3"
+  nginxIngress: "0.11.3"
   certManager: "v0.15.1"
