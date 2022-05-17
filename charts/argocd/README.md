@@ -1,8 +1,13 @@
 # ArgoCD in e2e-monitor cluster
 
+[ArgoCD](https://argo-cd.readthedocs.io/en/stable/) is used to declaratively define the components we use within our E2E-Monitor cluster, and ensure any updates are pushed out to the Kubernetes cluster in a GitOps style.
+
 ## ArgoCD Installation
 
+ArgoCD is already installed and functional within the cluster, but for historical purposes, this is the process that was followed.
+
 ```shell
+helm repo add argo https://argoproj.github.io/argo-helm
 helm install argocd argo/argo-cd -n argocd --create-namespace
 ```
 
@@ -27,6 +32,17 @@ kubectl get secret -n argocd argocd-initial-admin-secret -o json | jq -r '.data 
 ```
 
 Then open web browser to http://localhost:8080, and login with user: `admin`.
+
+## Using the Argo CLI
+
+Install the ArgoCLI using the [documentation](https://argo-cd.readthedocs.io/en/stable/cli_installation/).
+
+Login
+
+```
+# ensure you port-forward first
+argocd login localhost:8080
+```
 
 ## Application Deployment
 

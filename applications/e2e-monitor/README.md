@@ -1,0 +1,3 @@
+# E2E-Monitor ArgoCD Application
+
+All files in this directory are managed by an [ArgoCD Application](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#applications) in [source control](../../charts/e2e-cluster-applications/templates/02-e2e-monitor-application.yaml).  Any updates to files in this directory, which are merged to the git `targetRevision/branch` defined in [Helm values file](../../charts/e2e-cluster-applications/values.yaml) will be automatically synced to the `e2e-monitor` Kubernetes cluster.
