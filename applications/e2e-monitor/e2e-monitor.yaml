@@ -41,7 +41,7 @@ spec:
         - ReadWriteOnce
         resources:
           requests:
-            storage: 500Gi
+            storage: 800Gi
         storageClassName: standard-wait
   - name: data
     count: 3
