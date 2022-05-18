@@ -9,6 +9,8 @@ spec:
     repoURL: https://{{ .Values.spec.source.repo.provider }}/{{ .Values.spec.source.repo.organization }}/{{ .Values.spec.source.repo.repository }}
     targetRevision: {{ .Values.spec.source.targetRevision }}
     path: applications/e2e-monitor
+    plugin:
+      name: argocd-vault-plugin
   destination:
     server: https://kubernetes.default.svc
     namespace: default
