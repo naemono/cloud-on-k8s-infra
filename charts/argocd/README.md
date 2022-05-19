@@ -15,9 +15,9 @@ make argocd-deploy
 
 The following is the installed configuration of ArgoCD
 
-| Chart Name | Namespace | Public Cloud | Region | Project |
-|---|---|---|---|---|
-| argo-cd | argocd | GCP | europe-west2 | elastic-cloud-dev |
+| Chart Name | Namespace | Public Cloud | Region |
+|---|---|---|---|
+| argo-cd | argocd | GCP | europe-west2 |
 
 ## Connecting to ArgoCD web interface
 
