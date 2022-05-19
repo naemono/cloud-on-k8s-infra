@@ -7,7 +7,8 @@ metadata:
 type: Opaque
 apiVersion: v1
 stringData:
-    VAULT_ADDR: https://secrets.elastic.co:8200
+    # The below value will be replaced when running via makefile
+    VAULT_ADDR: VAULT_ADDR_TO_BE_REPLACED
     AVP_AUTH_TYPE: github
     AVP_GITHUB_TOKEN: <github-token>
     AVP_TYPE: vault
