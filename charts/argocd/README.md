@@ -9,6 +9,7 @@ ArgoCD is already installed and functional within the cluster, but for historica
 *Note* The ArgoCD wrapper helm chart used here, including it's bootstrap mechanism, which adds the argocd-vault-plugin, was initially written by the k8s-region team, and is located [here](https://github.com/elastic/cloud/tree/master/go/k8s-region/deploy), so all credit goes to them.
 
 ```shell
+cd charts/argocd
 make argocd-deploy
 ```
 
