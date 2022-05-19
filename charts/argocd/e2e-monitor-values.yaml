@@ -1,0 +1,5 @@
+argo-cd:
+  repoServer:
+    logLevel: debug
+  controller:
+    logLevel: debug

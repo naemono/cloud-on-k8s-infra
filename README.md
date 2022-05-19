@@ -5,8 +5,7 @@ This repository holds the managed infrastructure for the Elastic/cloud-on-k8s te
 ## Outstanding questions
 
 1. Do we want this [Helm Chart](./charts/e2e-cluster-applications/) to be something that is published to the [Elastic Helm Dev Repository](https://helm-dev.elastic.co/helm/) instead of just managed within a git repository?  If so, we'll probably want to leverage something like [Helm Chart Releaser Github Action](https://github.com/marketplace/actions/helm-chart-releaser), to release this automatically upon any version changes on merge to master/main.
-2. What credentials do we want to use to authenticate against https://github.com/elastic/cloud-on-k8s-infra?  I'm currently using a personal temporary SSH Key that will be deleted upon merge.
-3. Where do we want to store a backup of the Bitnami Sealed Secrets Operator's encryption/decryption keys?  (likely vault, but it's still an open question)
+2. What credentials do we want to use to authenticate against https://github.com/elastic/cloud-on-k8s-infra?  I'm currently using a personal temporary SSH Key, and a personal github token, that will be deleted upon merge and migration to a valid user.  *note* Mario Duarte is opening an issue with infra team to start this discussion, as k8s-region team has this same issue.
 
 ## ArgoCD Installation and Basic Connectivity
 
@@ -17,26 +16,23 @@ See [ArgoCD Readme](./charts/argocd/README.md)
 A Single helm chart manages all underlying Argo Applications within the cluster
 
 ```
-❯ helm ls -n argocd -f e2e-monitor-applications
+helm ls -n argocd -f e2e-monitor-applications
 NAME                    	NAMESPACE	REVISION	UPDATED                             	STATUS  	CHART                         	APP VERSION
-e2e-monitor-applications	argocd   	6       	2022-05-16 10:40:12.189632 -0500 CDT	deployed	e2e-cluster-applications-0.1.7
+e2e-monitor-applications	argocd   	8       	2022-05-18 14:15:09.500721 -0500 CDT	deployed	e2e-cluster-applications-0.1.9
 ```
 
 ### List of components that Helm Chart Manages
 
 * Helm Repositories
   * Elastic (https://helm.elastic.co)
-  * Bitnami Sealed Secrets (https://bitnami-labs.github.io/sealed-secrets)
   * Nginx (https://helm.nginx.com/stable)
   * Cert-Manager (https://charts.jetstack.io)
 * Helm Charts
   * ECK Operator (https://github.com/elastic/cloud-on-k8s#elastic-cloud-on-kubernetes-eck)
-  * Bitnami Sealed Secrets Operator (https://github.com/bitnami-labs/sealed-secrets#sealed-secrets-for-kubernetes)
   * Nginx Ingress Controller (https://github.com/nginxinc/kubernetes-ingress#nginx-ingress-controller)
   * Cert-Manager (https://github.com/cert-manager/cert-manager)
-* ArgoCD Project
-  * e2e-monitor
-* ArgoCD Applications
+* ArgoCD Applications/Projects
+  * Project named e2e-monitor
   * e2e-monitor git repository controlled by values file: `https://{{ .Values.spec.source.repo.provider }}/{{ .Values.spec.source.repo.organization }}/{{ .Values.spec.source.repo.repository }}/applications/e2e-monitor`
 * ArgoCD Git Repository Credentials
   * Git SSH key for authenticating against VCS.  Must be provided via values file, see [Template](./charts/e2e-cluster-applications/templates/07-source-repository-ssh-key.yaml).
@@ -55,6 +51,8 @@ spec:
     sshKey: |
       -----BEGIN OPENSSH PRIVATE KEY-----
 ```
+
+*Note* The following vault secret `secret/ci/elastic-cloud/eck/argocd/vault-creds` will need to be updated with new credentials after outstanding question #2 is answered.
 
 ## Examples of updating components
 
@@ -80,7 +78,7 @@ cd charts/e2e-cluster-applications
 helm upgrade e2e-monitor-applications -n argocd . --set version.eckOperator=2.2.1
 ```
 
-4. Update default value in [values file](./charts/e2e-cluster-applications/values.yaml)
+4. Update default value in [values file](./charts/e2e-cluster-applications/values.yaml), and bump chart `version` in [Chart.yaml](./charts/e2e-cluster-applications/Chart.yaml)
 
 5. Create pull request for new default version.
 

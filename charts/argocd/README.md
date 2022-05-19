@@ -4,34 +4,29 @@
 
 ## ArgoCD Installation
 
-ArgoCD is already installed and functional within the cluster, but for historical purposes, this is the process that was followed.
+ArgoCD is already installed and functional within the cluster, but for historical purposes, this is the process that was followed to install, and to upgrade ArgoCD, and it's requirements.
+
+*Note* The ArgoCD wrapper helm chart used here, including it's bootstrap mechanism, which adds the argocd-vault-plugin, was initially written by the k8s-region team, and is located [here](https://github.com/elastic/cloud/tree/master/go/k8s-region/deploy), so all credit goes to them.
 
 ```shell
-helm repo add argo https://argoproj.github.io/argo-helm
-helm install argocd argo/argo-cd -n argocd --create-namespace
+make argocd-deploy
 ```
 
 The following is the installed configuration of ArgoCD
 
 | Chart Name | Namespace | Public Cloud | Region | Project |
 |---|---|---|---|---|
-| argocd | argocd | GCP | europe-west2 | elastic-cloud-dev |
+| argo-cd | argocd | GCP | europe-west2 | elastic-cloud-dev |
 
 ## Connecting to ArgoCD web interface
 
 Port forward to ArgoCD service
 
 ```shell
-kubectl port-forward service/argocd-server 8080:80 -n argocd
+make argocd-ui
+Argo-CD is available at: https://localhost:8090
+Credentials: admin / password
 ```
-
-Retrieve the admin password
-
-```shell
-kubectl get secret -n argocd argocd-initial-admin-secret -o json | jq -r '.data | map_values(@base64d)'
-```
-
-Then open web browser to http://localhost:8080, and login with user: `admin`.
 
 ## Using the Argo CLI
 
@@ -40,7 +35,7 @@ Install the ArgoCLI using the [documentation](https://argo-cd.readthedocs.io/en/
 Login
 
 ```
-# ensure you port-forward first
+# ensure you port-forward, or run `make argocd-ui` first
 argocd login localhost:8080
 ```
 
@@ -60,5 +55,5 @@ helm repo add argo https://argoproj.github.io/argo-helm
 
 ```shell
 cd charts/argocd/e2e-cluster-applications
-helm install argocd argo/argo-cd -n argocd --create-namespace
+helm upgrade --install e2e-monitor-applications -n argocd .
 ```

@@ -1,0 +1,8 @@
+apiVersion: v2
+name: k8s-region-argocd
+version: 0.1.0
+
+dependencies:
+  - name: argo-cd
+    version: 4.5.11
+    repository: https://argoproj.github.io/argo-helm
