@@ -36,7 +36,7 @@ Login
 
 ```
 # ensure you port-forward, or run `make argocd-ui` first
-argocd login localhost:8080
+argocd login localhost:8090
 ```
 
 ## Application Deployment
