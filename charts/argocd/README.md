@@ -46,12 +46,6 @@ There's a single helm chart that manages all of the ArgoCD Applications/Projects
 
 ### Installing e2e-cluster-applications helm chart
 
-#### Ensure Argo repository is setup
-
-```shell
-helm repo add argo https://argoproj.github.io/argo-helm
-```
-
 #### Install Helm chart
 
 ```shell
