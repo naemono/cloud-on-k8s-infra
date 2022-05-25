@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -euxo pipefail
+
 ARGOCD_DEPLOY_TIMEOUT=120s
 ARGOCD_APPS_SYNC_TIMEOUT=720
 
