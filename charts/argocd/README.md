@@ -22,9 +22,11 @@ The following is the installed configuration of ArgoCD
 Port forward to ArgoCD service
 
 ```shell
+# password is stored in secret
+kubectl get secret -n argocd argocd-initial-admin-secret -o go-template='{{.data.password | base64decode}}
 make argocd-ui
 Argo-CD is available at: https://localhost:8090
-Credentials: admin / password
+Credentials: admin / <above-password-stored-in-secret>
 ```
 
 ## Using the Argo CLI

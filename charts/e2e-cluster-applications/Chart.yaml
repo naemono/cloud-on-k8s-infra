@@ -1,13 +1,11 @@
 apiVersion: v2
 name: e2e-cluster-applications
 description: |
-  Helm chart containing all of the applications managed
-  by the Elastic cloud-on-k8s team, that are installed on the End-to-End
-  monitoring cluster.
+  Helm chart bootstrapping the ArgoCD project, repository, credentials, and Application that will be managed fully within a git repository post-installation.
 
 type: application
 
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.1.9
+version: 0.1.10
