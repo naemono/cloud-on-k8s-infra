@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euxo pipefail
+set -exo pipefail
 
 ARGOCD_DEPLOY_TIMEOUT=120s
 ARGOCD_APPS_SYNC_TIMEOUT=720
@@ -9,7 +9,6 @@ CLOUD_GIT_REF=${CLOUD_GIT_REF:-HEAD}
 IMG_TAG=${IMG_TAG:-latest}
 ENV_NAME=${ENV_NAME:-dev}
 
-
 deploy() {
     if ! command -v argocd-vault-plugin &> /dev/null; then
       echo "the argocd-vault-plugin plugin is required to deploy, download binary from https://github.com/argoproj-labs/argocd-vault-plugin/releases"
@@ -17,7 +16,7 @@ deploy() {
     fi
 
     echo "--- Bootstrapping ArgoCD vault credentials"
-    make --no-print-directory -C argocd-bootstrap generate-vault-credentials | kubectl apply -n argocd -f -
+    make --no-print-directory -C argocd-bootstrap generate-argocd-credentials | kubectl apply -n argocd -f -
 
     echo "--- Deploying ArgoCD"
     helm dependency build argocd/
