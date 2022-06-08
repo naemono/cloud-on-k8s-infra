@@ -8,4 +8,4 @@ metadata:
 stringData:
   url: https://{{ .Values.spec.source.repo.provider }}/{{ .Values.spec.source.repo.organization }}/{{ .Values.spec.source.repo.repository }}
   username: not-used
-  password: {{ required "A github token is required for installation" .Values.spec.githubToken }}
+  password: {{ required "A github token is required for installation" .Values.spec.source.githubToken }}
