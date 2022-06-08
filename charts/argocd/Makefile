@@ -3,6 +3,9 @@ ROOT_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
 ##@ Deployment
 
+# This should only need to be run on the initial argocd installation or upgrade
+# or when vault credentials that argocd should use change, as it bootstraps
+# the credentials for argocd, and runs a 'helm upgrade argocd'.
 .PHONY: argocd-deploy
 argocd-deploy: ## Deploys Argo-CD into current context
 	VALUES_FILE=${ROOT_DIR}/e2e-monitor-values.yaml ./argocd.sh deploy

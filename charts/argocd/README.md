@@ -23,7 +23,7 @@ Port forward to ArgoCD service
 
 ```shell
 # password is stored in secret
-kubectl get secret -n argocd argocd-initial-admin-secret -o go-template='{{.data.password | base64decode}}
+kubectl get secret -n argocd argocd-initial-admin-secret -o go-template='{{.data.password | base64decode}}'
 make argocd-ui
 Argo-CD is available at: https://localhost:8090
 Credentials: admin / <above-password-stored-in-secret>
@@ -49,6 +49,6 @@ There's a single helm chart that manages all of the ArgoCD Applications/Projects
 #### Install Helm chart
 
 ```shell
-cd charts/argocd/e2e-cluster-applications
+cd ../e2e-cluster-applications
 helm upgrade --install e2e-monitor-applications -n argocd .
 ```

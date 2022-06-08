@@ -15,12 +15,12 @@ deploy() {
       exit 1
     fi
 
-    echo "--- Bootstrapping ArgoCD vault credentials"
-    make --no-print-directory -C argocd-bootstrap generate-argocd-credentials | kubectl apply -n argocd -f -
-
     echo "--- Deploying ArgoCD"
     helm dependency build argocd/
     helm upgrade --install --reset-values --namespace=argocd --create-namespace -f ${VALUES_FILE} argo-cd argocd/
+
+    echo "--- Bootstrapping ArgoCD vault credentials"
+    make --no-print-directory -C argocd-bootstrap generate-argocd-credentials | kubectl apply -n argocd -f -
 
     echo "--- Waiting for ArgoCD Server to be ready"
     kubectl wait pods -n argocd --for=condition=Ready --selector=app.kubernetes.io/name=argocd-server --timeout=${ARGOCD_DEPLOY_TIMEOUT}

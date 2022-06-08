@@ -1,10 +1,11 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: source-repository
+  name: cloud-on-k8s-infra
   namespace: argocd
   labels:
     argocd.argoproj.io/secret-type: repository
 stringData:
-  type: git
   url: https://{{ .Values.spec.source.repo.provider }}/{{ .Values.spec.source.repo.organization }}/{{ .Values.spec.source.repo.repository }}
+  username: not-used
+  password: {{ required "A github token is required for installation" .Values.spec.githubToken }}
