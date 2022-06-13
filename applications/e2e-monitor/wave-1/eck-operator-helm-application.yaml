@@ -1,24 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  annotations:
-    argocd.argoproj.io/sync-wave: "1"
-  name: certmanager-controller
+  name: eck-operator
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: cert-manager
+    namespace: elastic-system
     server: 'https://kubernetes.default.svc'
   source:
-    path: 'cert-manager'
-    repoURL: 'https://charts.jetstack.io'
-    targetRevision: "v0.15.1"
-    chart: cert-manager
-    helm:
-      values: |
-        installCRDs: true
+    path: 'elastic'
+    repoURL: 'https://helm.elastic.co'
+    targetRevision: "2.2.0"
+    chart: eck-operator
   project: e2e-monitor
   syncPolicy:
     automated:
