@@ -2,6 +2,8 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: IngressClass
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
   name: nginx
 spec:
   controller: k8s.io/ingress-nginx

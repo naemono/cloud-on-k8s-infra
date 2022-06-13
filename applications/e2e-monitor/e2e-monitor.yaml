@@ -2,6 +2,8 @@
 apiVersion: elasticsearch.k8s.elastic.co/v1
 kind: Elasticsearch
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
   name: e2e-monitor
 spec:
   version: 7.15.1
