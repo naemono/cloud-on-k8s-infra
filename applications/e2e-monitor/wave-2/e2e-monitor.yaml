@@ -27,12 +27,12 @@ spec:
           - name: ES_JAVA_OPTS
             value: -Xms16g -Xmx16g
           resources:
-            requests:
-              memory: 32Gi
-              cpu: 18
             limits:
-              memory: 32Gi
-              cpu: 18
+              cpu: 12
+              memory: 48Gi
+            requests:
+              cpu: 12
+              memory: 48Gi
     volumeClaimTemplates:
     - metadata:
         name: elasticsearch-data
@@ -63,12 +63,12 @@ spec:
           - name: ES_JAVA_OPTS
             value: -Xms16g -Xmx16g
           resources:
-            requests:
-              memory: 32Gi
-              cpu: 18
             limits:
-              memory: 32Gi
-              cpu: 18
+              cpu: 12
+              memory: 48Gi
+            requests:
+              cpu: 12
+              memory: 48Gi
     volumeClaimTemplates:
     - metadata:
         name: elasticsearch-data
