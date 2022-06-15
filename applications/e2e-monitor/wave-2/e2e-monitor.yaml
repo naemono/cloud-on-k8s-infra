@@ -11,6 +11,7 @@ spec:
   - name: md-nodes-4
     count: 3
     config:
+      node.roles: ["master", "data", "ingest", "ml", "transform", "remote_cluster_client"]
       node.store.allow_mmap: false
     podTemplate:
       spec:
@@ -46,7 +47,7 @@ spec:
   - name: data-2
     count: 3
     config:
-      node.master: false
+      node.roles: ["data", "ingest", "ml", "transform"]
       node.store.allow_mmap: false
     podTemplate:
       spec:
