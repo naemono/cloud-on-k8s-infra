@@ -1,0 +1,65 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+  name: e2e-monitor-dependencies
+  namespace: argocd
+spec:
+  project: e2e-monitor
+  source:
+    repoURL: https://{{ .Values.spec.source.repo.provider }}/{{ .Values.spec.source.repo.organization }}/{{ .Values.spec.source.repo.repository }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}
+    path: applications/e2e-monitor/wave-0
+    plugin:
+      name: argocd-vault-plugin
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  name: e2e-monitor-helm-applications
+  namespace: argocd
+spec:
+  project: e2e-monitor
+  source:
+    repoURL: https://{{ .Values.spec.source.repo.provider }}/{{ .Values.spec.source.repo.organization }}/{{ .Values.spec.source.repo.repository }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}
+    path: applications/e2e-monitor/wave-1
+    plugin:
+      name: argocd-vault-plugin
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  name: e2e-monitor-helm-resources
+  namespace: argocd
+spec:
+  project: e2e-monitor
+  source:
+    repoURL: https://{{ .Values.spec.source.repo.provider }}/{{ .Values.spec.source.repo.organization }}/{{ .Values.spec.source.repo.repository }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}
+    path: applications/e2e-monitor/wave-2
+    plugin:
+      name: argocd-vault-plugin
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      selfHeal: true

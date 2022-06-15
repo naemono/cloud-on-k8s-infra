@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: eck-operator
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: elastic-system
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: 'elastic'
+    repoURL: 'https://helm.elastic.co'
+    targetRevision: "2.2.0"
+    chart: eck-operator
+  project: e2e-monitor
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true

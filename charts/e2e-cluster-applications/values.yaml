@@ -1,0 +1,10 @@
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  source:
+    repo:
+      provider: github.com
+      organization: elastic
+      repository: cloud-on-k8s-infra
+    targetRevision: master
+    githubToken: null

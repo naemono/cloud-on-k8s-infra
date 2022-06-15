@@ -1,0 +1,105 @@
+---
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: e2e-monitor
+spec:
+  version: 7.15.1
+  secureSettings:
+    - secretName: gcs-credentials
+  nodeSets:
+  - name: md-nodes-4
+    count: 3
+    config:
+      node.store.allow_mmap: false
+    podTemplate:
+      spec:
+        initContainers:
+        - name: install-plugins
+          command:
+          - sh
+          - -c
+          - |
+            bin/elasticsearch-plugin install --batch repository-gcs
+        containers:
+        - name: elasticsearch
+          env:
+          - name: ES_JAVA_OPTS
+            value: -Xms24g -Xmx24g
+          resources:
+            limits:
+              cpu: 12
+              memory: 48Gi
+            requests:
+              cpu: 12
+              memory: 48Gi
+    volumeClaimTemplates:
+    - metadata:
+        name: elasticsearch-data
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1000Gi
+        storageClassName: standard-wait
+  - name: data-2
+    count: 3
+    config:
+      node.master: false
+      node.store.allow_mmap: false
+    podTemplate:
+      spec:
+        initContainers:
+        - name: install-plugins
+          command:
+          - sh
+          - -c
+          - |
+            bin/elasticsearch-plugin install --batch repository-gcs
+        containers:
+        - name: elasticsearch
+          env:
+          - name: ES_JAVA_OPTS
+            value: -Xms24g -Xmx24g
+          resources:
+            limits:
+              cpu: 12
+              memory: 48Gi
+            requests:
+              cpu: 12
+              memory: 48Gi
+    volumeClaimTemplates:
+    - metadata:
+        name: elasticsearch-data
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 800Gi
+        storageClassName: standard-wait
+---
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  name: e2e-monitor
+spec:
+  version: 7.15.1
+  count: 1
+  config:
+    kibana.autocompleteTimeout: 100000
+    kibana.autocompleteTerminateAfter: 100000000
+    server.maxPayloadBytes: 10485760
+  elasticsearchRef:
+    name: e2e-monitor
+---
+apiVersion: apm.k8s.elastic.co/v1
+kind: ApmServer
+metadata:
+  name: e2e-monitor
+spec:
+  version: 7.15.1
+  count: 1
+  elasticsearchRef:
+    name: "e2e-monitor"

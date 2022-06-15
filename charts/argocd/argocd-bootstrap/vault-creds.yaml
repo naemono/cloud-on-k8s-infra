@@ -1,0 +1,15 @@
+kind: Secret
+metadata:
+  name: argocd-vault-plugin-credentials
+  namespace: argocd
+  annotations:
+    avp.kubernetes.io/path: "secret/ci/elastic-cloud/eck/argocd/vault-creds"
+type: Opaque
+apiVersion: v1
+stringData:
+    # The below value will be replaced when running via makefile
+    VAULT_ADDR: VAULT_ADDR_TO_BE_REPLACED
+    AVP_AUTH_TYPE: github
+    AVP_GITHUB_TOKEN: <github-token>
+    AVP_TYPE: vault
+    AVP_KV_VERSION: "1"

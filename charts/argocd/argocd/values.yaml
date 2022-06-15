@@ -1,0 +1,92 @@
+argo-cd:
+  controller:
+    args:
+      repoServerTimeoutSeconds: "300"
+
+  server:
+    config:
+      resource.customizations.ignoreDifferences.admissionregistration.k8s.io_ValidatingWebhookConfiguration: |
+        jqPathExpressions:
+        - '.webhooks[]?.clientConfig.caBundle'
+
+      configManagementPlugins: |
+        - name: argocd-vault-plugin
+          generate:
+            command: ["argocd-vault-plugin"]
+            args: ["generate", "./"]
+
+        - name: argocd-vault-plugin-helm
+          generate:
+            command: ["sh", "-c"]
+            args: ['helm template --namespace "${ARGOCD_APP_NAMESPACE}" "$ARGOCD_APP_NAME" . | argocd-vault-plugin generate -']
+
+        # This lets you pass args to the Helm invocation as described here: https://argocd-vault-plugin.readthedocs.io/en/stable/usage/#with-helm
+        - name: argocd-vault-plugin-helm-with-args
+          generate:
+            command: ["sh", "-c"]
+            args: ['helm template --namespace "${ARGOCD_APP_NAMESPACE}" "$ARGOCD_APP_NAME" ${helm_args} . | argocd-vault-plugin generate -']
+
+        # This lets you pass a values file as a string as described here:
+        # https://argocd-vault-plugin.readthedocs.io/en/stable/usage/#with-helm
+        - name: argocd-vault-plugin-helm-with-values
+          generate:
+            command: ["bash", "-c"]
+            args: ['helm template "$ARGOCD_APP_NAME" --namespace "${ARGOCD_APP_NAMESPACE}" -f <(echo "$HELM_VALUES") . | argocd-vault-plugin generate -']
+
+        - name: argocd-vault-plugin-kustomize
+          generate:
+            command: ["sh", "-c"]
+            args: ["kustomize build . | argocd-vault-plugin generate -"]
+
+      resource.customizations: |
+        argoproj.io/Application:
+          health.lua: |
+            hs = {}
+            hs.status = "Progressing"
+            hs.message = ""
+            if obj.status ~= nil then
+              if obj.status.health ~= nil then
+                hs.status = obj.status.health.status
+                if obj.status.health.message ~= nil then
+                  hs.message = obj.status.health.message
+                end
+              end
+            end
+            return hs
+
+  repoServer:
+    envFrom:
+      - configMapRef:
+          name: repo-server-env
+      - secretRef:
+          name: argocd-vault-plugin-credentials
+
+    volumeMounts:
+      - name: custom-tools
+        mountPath: /usr/local/bin/argocd-vault-plugin
+        subPath: argocd-vault-plugin
+
+    volumes:
+      - name: custom-tools
+        emptyDir: {}
+
+    initContainers:
+      - name: download-tools
+        image: alpine:3.8
+        command: [sh, -c]
+
+        env:
+          - name: AVP_VERSION
+            value: "1.11.0"
+        args:
+          - >-
+            wget -O argocd-vault-plugin
+            https://github.com/argoproj-labs/argocd-vault-plugin/releases/download/v${AVP_VERSION}/argocd-vault-plugin_${AVP_VERSION}_linux_amd64 &&
+            chmod +x argocd-vault-plugin &&
+            mv argocd-vault-plugin /custom-tools/
+        volumeMounts:
+          - mountPath: /custom-tools
+            name: custom-tools
+
+    serviceAccount:
+      automountServiceAccountToken: true

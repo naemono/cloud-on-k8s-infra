@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: e2e-monitor
+  namespace: argocd
+  # Finalizer that ensures that project is not deleted until it is not referenced by any application
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: End to End monitor for Elastic Cloud on ECK Team
+  # Allow manifests to deploy from any Git repos
+  sourceRepos:
+  - '*'
+  # Allow applications to deploy to any namespace, in any cluster (could likely be minimized in the future)
+  destinations:
+  - namespace: '*'
+    server: '*'
+  # Allow applications to create any cluster resources (could likely be whittled down, but there are a lot of resources)
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
