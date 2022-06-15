@@ -1,6 +1,3 @@
-# ROOT_DIR is the absolute path of this Makefile
-ROOT_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
-
 ##@ Deployment
 
 # This should only need to be run on the initial argocd installation or upgrade
