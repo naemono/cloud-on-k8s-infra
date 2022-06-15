@@ -1,5 +1,5 @@
 VAULT_TOKEN ?= $(shell cat ~/.vault-token)
-VAULT_ADDR=${VAULT_ADDR:-https://localhost:8200}
+VAULT_ADDR ?= https://localhost:8200
 
 argocd-vault-plugin:
 ifeq (, $(shell which argocd-vault-plugin))

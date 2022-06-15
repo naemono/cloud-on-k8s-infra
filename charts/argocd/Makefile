@@ -8,7 +8,7 @@ ROOT_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 # the credentials for argocd, and runs a 'helm upgrade argocd'.
 .PHONY: argocd-deploy
 argocd-deploy: ## Deploys Argo-CD into current context
-	VALUES_FILE=${ROOT_DIR}/e2e-monitor-values.yaml ./argocd.sh deploy
+	VALUES_FILE=e2e-monitor-values.yaml ./argocd.sh deploy
 
 ##@ Argocd
 

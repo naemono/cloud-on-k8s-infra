@@ -4,7 +4,7 @@ This repository holds the managed infrastructure for the Elastic/cloud-on-k8s te
 
 ## Outstanding questions
 
-1. What credentials do we want to use to authenticate against https://github.com/elastic/cloud-on-k8s-infra?  I'm currently using a personal temporary SSH Key, and a personal github token, that will be deleted upon merge and migration to a valid user.  *note* Mario Duarte is opening an issue with infra team to start this discussion, as k8s-region team has this same issue.
+1. What credentials do we want to use to authenticate against https://github.com/elastic/cloud-on-k8s-infra?  I'm currently using a personal github token, that will be deleted upon merge and migration to a valid user.  *note* [Elastic/infra issue](https://github.com/elastic/infra/issues/36099)
 
 ## ArgoCD Installation and Basic Connectivity
 
