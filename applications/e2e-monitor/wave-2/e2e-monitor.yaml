@@ -92,6 +92,9 @@ spec:
     kibana.autocompleteTimeout: 100000
     kibana.autocompleteTerminateAfter: 100000000
     server.maxPayloadBytes: 10485760
+    xpack.fleet.packages:
+      - name: apm
+        version: latest
   elasticsearchRef:
     name: e2e-monitor
 ---
