@@ -12,7 +12,7 @@ spec:
   source:
     path: 'elastic'
     repoURL: 'https://helm.elastic.co'
-    targetRevision: "2.7.0"
+    targetRevision: "2.9.0"
     chart: eck-operator
   project: e2e-monitor
   syncPolicy:
