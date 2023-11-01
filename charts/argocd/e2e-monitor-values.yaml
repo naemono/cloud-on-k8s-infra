@@ -1,0 +1,7 @@
+argo-cd:
+  dex:
+    enabled: false
+  crds:
+    install: false
+    keep: true
+    annotations: {}
